@@ -1,29 +1,49 @@
-import React from "react";
+import React, { useContext } from "react";
 import IngredientList from "../IngredientList/IngredientList";
+import "./Recipe.css";
+import { RecipeContext } from "../../App";
+
 const Recipe = (props) => {
-  const { name, cookTime, servings, instructions, ingredients } = props;
+  const { id, name, cookTime, servings, instructions, ingredients } = props;
+  const { handleRecipeDelete,handleRecipeSelect } = useContext(RecipeContext);
   return (
-    <div>
-      <div>
-        <h3>{name}</h3>
+    <div className='recipe'>
+      <div className='recipe__header'>
+        <h3 className='recipe__title'>{name}</h3>
         <div>
-          <button>Edit</button>
-          <button>Delete</button>
+          <button
+            className='btn btn--primary mr-1'
+            onClick={() => handleRecipeSelect(id)}
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => {
+              handleRecipeDelete(id);
+            }}
+            className='btn btn--danger'
+          >
+            Delete
+          </button>
         </div>
       </div>
-      <div>
-        <span>Cook TIme</span>
-        <span>{cookTime}</span>
+      <div className='recipe__row'>
+        <span className='recipe__label'>Cook Time:</span>
+        <span className='recipe__value'>{cookTime}</span>
       </div>
-      <div>
-        <span>Servings</span>
-        <span>{servings}</span>
+      <div className='recipe__row'>
+        <span className='recipe__label'>Servings:</span>
+        <span className='recipe__value'>{servings}</span>
       </div>
-      <div>
-        <span>Instructions:</span>
-        <div>{instructions}</div>
-        <span>Ingredients:</span>
-        <div>
+      <div className='recipe__row'>
+        <span className='recipe__label'>Instructions:</span>
+        <div className='recipe__value recipe__instructions recipe__value--indented'>
+          {instructions}
+        </div>
+      </div>
+      <div className='recipe__row'>
+        <span className='recipe__label'>Ingredients:</span>
+        <div className='recipe__value recipe__value--indented'>
           <IngredientList ingredients={ingredients} />
         </div>
       </div>
